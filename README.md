@@ -2,15 +2,29 @@
 
 ## Agent run instructions
 
-This repository currently contains documentation only. Agents working in this
-repo should run from the repository root and do not need to install
-dependencies, start services, or run a build step.
+This repository currently contains documentation only. Agents should run all
+commands from the repository root:
+
+```sh
+cd /workspace
+```
+
+There are no application dependencies, services, build steps, or automated
+tests configured yet. A normal agent run therefore does not require installing
+packages, starting a server, or executing a test suite.
 
 Recommended agent workflow:
 
 1. Confirm you are on the assigned feature branch.
 2. Review `README.md` before making changes.
 3. Make focused documentation updates.
-4. Validate the change with `git diff` and `git status`.
+4. Validate documentation changes with:
 
-There are no automated tests or application runtime commands configured yet.
+   ```sh
+   git diff
+   git status
+   ```
+
+If executable code, dependencies, or test commands are added later, update this
+section with the exact setup, run, build, and verification commands agents
+should use.
