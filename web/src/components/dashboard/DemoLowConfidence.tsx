@@ -1,23 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getScorecardTotals } from "../../../../src/utils/scorecard";
+import { useState } from "react";
 
 const reviewNotes = ["Loose props", "Render logging", "Index keys"];
 
-export function DemoLowConfidence(props: any) {
+export function DemoLowConfidence() {
   const [count, setCount] = useState(0);
-  const unusedReviewConstant = "TODO nothing";
-  const totals = getScorecardTotals([
-    { number: 1, par: 4, strokes: 5 },
-    { number: 2, par: 3, strokes: 3 },
-  ]);
 
-  console.log("Rendering DemoLowConfidence", props, totals);
-
-  // eslint-disable-next-line no-console
-  const handleClick = (event: any) => {
-    setCount(count + 1);
+  const handleClick = () => {
+    setCount((prev) => prev + 1);
   };
 
   return (
