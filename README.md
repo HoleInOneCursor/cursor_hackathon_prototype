@@ -36,6 +36,27 @@ players plan rounds, track scorecards, and review basic performance trends.
 - **Deployment:** A hosted frontend, API service, and managed database. Keep
   environment variables for secrets and database URLs outside source control.
 
+### Current frontend prototype
+
+This repository now includes a simple Vite + React frontend named Fairway Log.
+It is a static prototype of the MVP experience with dashboard metrics, saved
+course cards, an active scorecard preview, and recent round history. The app
+uses local sample data only; backend APIs, authentication, and persistence are
+future work.
+
+Run it locally:
+
+```sh
+npm install
+npm run dev
+```
+
+Build the production bundle:
+
+```sh
+npm run build
+```
+
 ### Initial data model
 
 - **User:** id, name, email, handicap, created timestamp.
@@ -98,26 +119,39 @@ cd /workspace
 git status --short --branch
 ```
 
-This repository currently contains documentation only. There are no application
-dependencies, services, build steps, or automated tests configured yet, so an
-agent run does not require installing packages, starting a server, or executing
-a test suite.
+This repository contains a Vite + React frontend prototype. Agent runs that
+modify executable code should install dependencies and run the production build
+before committing.
 
 Recommended workflow:
 
 1. Confirm the current branch matches the assigned task branch.
 2. Review `README.md` and any task-specific instructions before editing.
-3. Make focused documentation changes from the repository root.
-4. Validate the final state before committing:
+3. Install dependencies when needed:
 
    ```sh
+   npm install
+   ```
+
+4. Make focused changes from the repository root.
+5. Validate the final state before committing:
+
+   ```sh
+   npm run build
    git diff
    git status --short --branch
    ```
 
-5. Commit and push changes on the assigned branch, then open or update the pull
+6. Commit and push changes on the assigned branch, then open or update the pull
    request for that branch.
 
-If executable code, dependencies, or test commands are added later, update this
-section with the exact setup, run, build, and verification commands agents
-should use.
+For documentation-only changes, the build command may be skipped if no
+executable code or dependencies changed.
+
+Current application commands:
+
+   ```sh
+   npm run dev      # start the local development server
+   npm run build    # type-check and create the production bundle
+   npm run preview  # preview the production bundle locally
+   ```
