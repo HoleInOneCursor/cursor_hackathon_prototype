@@ -1,10 +1,10 @@
 import { CoursesSection } from "./components/CoursesSection";
-import { DashboardSection } from "./components/DashboardSection";
 import { HeroSection } from "./components/HeroSection";
 import { RoundHistorySection } from "./components/RoundHistorySection";
 import { ScorecardSection } from "./components/ScorecardSection";
 import { courses, recentRounds, scorecard } from "./data/golfData";
 import { getScorecardTotals } from "./utils/scorecard";
+import { Dashboard } from "../web/src/components/dashboard/Dashboard";
 
 export function App() {
   const { totalPar, totalScore } = getScorecardTotals(scorecard);
@@ -12,7 +12,7 @@ export function App() {
   return (
     <main>
       <HeroSection totalPar={totalPar} totalScore={totalScore} />
-      <DashboardSection />
+      <Dashboard />
       <CoursesSection courses={courses} />
       <ScorecardSection
         holes={scorecard}
