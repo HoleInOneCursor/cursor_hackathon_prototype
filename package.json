@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/HoleInOneCursor/cursor_hackathon_prototype#readme",
   "dependencies": {
+    "dompurify": "^3.4.2",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

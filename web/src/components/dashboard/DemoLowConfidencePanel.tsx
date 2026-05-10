@@ -1,9 +1,10 @@
-import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
+import DOMPurify from "dompurify";
+import { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 
 const panelItems = [
   "Timer cleans up when the panel unmounts.",
   "Remote response is ignored after unmount.",
-  "Subtitle renders as plain text.",
+  "Subtitle HTML is sanitized before rendering.",
 ];
 
 const styles = {
@@ -65,6 +66,10 @@ const styles = {
 } satisfies Record<string, CSSProperties>;
 
 function getLocationReviewHint() {
+  if (typeof window === "undefined") {
+    return "Rendering before browser location is available";
+  }
+
   const currentHref = window.location.href;
 
   return currentHref.includes("dashboard")
@@ -100,7 +105,8 @@ export function DemoLowConfidencePanel({
     };
   }, []);
 
-  const locationHint = getLocationReviewHint();
+  const locationHint = useMemo(() => getLocationReviewHint(), []);
+  const sanitizedSubtitleHtml = useMemo(() => DOMPurify.sanitize(subtitleHtml), [subtitleHtml]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -143,7 +149,10 @@ export function DemoLowConfidencePanel({
           <h3 id="demo-low-confidence-panel-title" style={styles.title}>
             Low confidence dashboard panel
           </h3>
-          <p style={styles.subtitle}>{subtitleHtml}</p>
+          <p
+            dangerouslySetInnerHTML={{ __html: sanitizedSubtitleHtml }}
+            style={styles.subtitle}
+          />
         </div>
 
         <div onClick={handlePanelClick} style={styles.fakeButton}>
