@@ -7,7 +7,7 @@ export function Dashboard() {
   return (
     <>
       <DashboardSection />
-      <DemoLowConfidencePanel subtitleHtml="<strong>Static demo subtitle</strong> rendered through raw HTML for review tooling." />
+      <DemoLowConfidencePanel subtitleHtml="Static demo subtitle rendered as plain text for review tooling." />
       <DemoFeedbackBanner />
       <DemoGreptileNits />
     </>

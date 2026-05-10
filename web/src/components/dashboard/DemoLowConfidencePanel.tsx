@@ -1,12 +1,10 @@
 import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
 
 const panelItems = [
-  "Timer intentionally leaks across unmounts.",
-  "Remote response updates state whenever it arrives.",
-  "Subtitle HTML is injected for review tooling visibility.",
+  "Timer cleans up when the panel unmounts.",
+  "Remote response is ignored after unmount.",
+  "Subtitle renders as plain text.",
 ];
-
-const unusedPanelMode = "demo-only-review-bait";
 
 const styles = {
   wrapper: {
@@ -74,34 +72,67 @@ function getLocationReviewHint() {
     : `Rendering from ${currentHref}`;
 }
 
-export function DemoLowConfidencePanel(props: any) {
+interface DemoLowConfidencePanelProps {
+  endpoint?: string;
+  subtitleHtml: string;
+}
+
+interface RemotePayload {
+  origin?: string;
+  url?: string;
+}
+
+export function DemoLowConfidencePanel({
+  endpoint = "https://httpbin.org/delay/2",
+  subtitleHtml,
+}: DemoLowConfidencePanelProps) {
   const [secondsOpen, setSecondsOpen] = useState(0);
   const [remoteMessage, setRemoteMessage] = useState("Waiting for delayed JSON...");
   const [clicks, setClicks] = useState(0);
-  const endpoint = props.endpoint || "https://httpbin.org/delay/2";
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = window.setInterval(() => {
       setSecondsOpen((value) => value + 1);
     }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const locationHint = getLocationReviewHint();
 
   useEffect(() => {
-    fetch(endpoint)
-      .then((response) => response.json())
-      .then((payload: any) => {
+    const controller = new AbortController();
+    let isMounted = true;
+
+    fetch(endpoint, { signal: controller.signal })
+      .then((response) => response.json() as Promise<RemotePayload>)
+      .then((payload) => {
+        if (!isMounted) {
+          return;
+        }
+
         setRemoteMessage(payload.url || payload.origin || "Delayed JSON loaded");
       })
-      .catch((error: any) => {
-        setRemoteMessage(`Fetch failed: ${error.message}`);
-      });
-  }, []);
+      .catch((error: unknown) => {
+        if (!isMounted || (error instanceof DOMException && error.name === "AbortError")) {
+          return;
+        }
 
-  const handlePanelClick = (event: any) => {
-    setClicks(clicks + 1);
+        const message = error instanceof Error ? error.message : "Unknown error";
+
+        setRemoteMessage(`Fetch failed: ${message}`);
+      });
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [endpoint]);
+
+  const handlePanelClick = (_event: MouseEvent<HTMLDivElement>) => {
+    setClicks((value) => value + 1);
   };
 
   return (
@@ -112,10 +143,7 @@ export function DemoLowConfidencePanel(props: any) {
           <h3 id="demo-low-confidence-panel-title" style={styles.title}>
             Low confidence dashboard panel
           </h3>
-          <p
-            dangerouslySetInnerHTML={{ __html: props.subtitleHtml }}
-            style={styles.subtitle}
-          />
+          <p style={styles.subtitle}>{subtitleHtml}</p>
         </div>
 
         <div onClick={handlePanelClick} style={styles.fakeButton}>
