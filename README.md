@@ -1,28 +1,30 @@
 # cursor_hackathon_prototype
 
-## Agent run instructions
+## How agents run this repo
 
-This repository currently contains documentation only. Agents should run all
-commands from the repository root:
+Agents should work from the repository root and stay on the assigned feature
+branch for the task:
 
 ```sh
 cd /workspace
+git status --short --branch
 ```
 
-There are no application dependencies, services, build steps, or automated
-tests configured yet. A normal agent run therefore does not require installing
-packages, starting a server, or executing a test suite.
+This repository currently contains documentation only. There are no application
+dependencies, services, build steps, or automated tests configured yet, so an
+agent run does not require installing packages, starting a server, or executing
+a test suite.
 
 Recommended agent workflow:
 
-1. Confirm you are on the assigned feature branch.
-2. Review `README.md` before making changes.
-3. Make focused documentation updates.
-4. Validate documentation changes with:
+1. Confirm the current branch matches the assigned task branch.
+2. Review `README.md` and any task-specific instructions before editing.
+3. Make focused documentation changes.
+4. Validate the final state with:
 
    ```sh
    git diff
-   git status
+   git status --short --branch
    ```
 
 If executable code, dependencies, or test commands are added later, update this
