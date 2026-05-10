@@ -1,0 +1,34 @@
+{
+  "name": "cursor-hackathon-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "This project can grow into a simple full-stack golfing application that helps players plan rounds, track scorecards, and review basic performance trends.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoleInOneCursor/cursor_hackathon_prototype.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HoleInOneCursor/cursor_hackathon_prototype/issues"
+  },
+  "homepage": "https://github.com/HoleInOneCursor/cursor_hackathon_prototype#readme",
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.11"
+  }
+}
