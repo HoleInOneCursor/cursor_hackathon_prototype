@@ -75,6 +75,21 @@ players plan rounds, track scorecards, and review basic performance trends.
 
 ## How agents run this repo
 
+### AI-run workflow
+
+This repository workflow is run by AI agents. A human provides the task or issue,
+then an AI agent reviews the repository, makes focused changes on the assigned
+branch, validates the result, and opens a pull request for human review.
+
+```mermaid
+flowchart LR
+    A[Human task or issue] --> B[AI agent reviews repo]
+    B --> C[AI agent edits assigned branch]
+    C --> D[Validation and git status check]
+    D --> E[Pull request opened]
+    E --> F[Human review and merge]
+```
+
 Agents should work from the repository root and stay on the assigned feature
 branch for the task. Start each run by confirming the workspace and branch:
 
