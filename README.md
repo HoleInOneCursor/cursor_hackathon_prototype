@@ -41,8 +41,11 @@ players plan rounds, track scorecards, and review basic performance trends.
 This repository now includes a simple Vite + React frontend named Fairway Log.
 It is a static prototype of the MVP experience with dashboard metrics, saved
 course cards, an active scorecard preview, and recent round history. The app
-uses local sample data only; backend APIs, authentication, and persistence are
-future work.
+is organized with component-style architecture: focused React components live
+under `src/components`, shared sample data lives under `src/data`, domain types
+live under `src/types`, and small calculations live under `src/utils`. It uses
+local sample data only; backend APIs, authentication, and persistence are future
+work.
 
 Run it locally:
 
